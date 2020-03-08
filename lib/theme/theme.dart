@@ -33,7 +33,7 @@ class AppTheme {
   );
 
   static TextStyle titleStyle =
-      const TextStyle(color: LightColor.lightblack, fontSize: 24, fontWeight: FontWeight.bold);
+      const TextStyle(color: LightColor.lightblack, fontSize: 16);
   static TextStyle subTitleStyle =
       const TextStyle(color: LightColor.subTitleTextColor, fontSize: 12);
 
