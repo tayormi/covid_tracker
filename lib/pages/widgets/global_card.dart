@@ -1,6 +1,7 @@
 import 'package:covid_tracker/theme/color/light_color.dart';
 import 'package:covid_tracker/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_screen/responsive_screen.dart';
 
 class GlobalSituationCard extends StatelessWidget {
@@ -12,6 +13,7 @@ class GlobalSituationCard extends StatelessWidget {
   const GlobalSituationCard({Key key, @required this.cardTitle, @required this.caseTitle, @required this.currentData, @required this.newData}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final formatter = new NumberFormat("#,###");
     final Function wp = Screen(context).wp;
     final Function hp = Screen(context).hp;
     return Container(
@@ -43,7 +45,7 @@ class GlobalSituationCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(this.currentData != null ? this.currentData.toString() : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
+                    Text(this.currentData != null ? formatter.format(this.currentData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
                     SizedBox(height: hp(1)),
                     Text(this.caseTitle, style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
                   ],
@@ -60,7 +62,7 @@ class GlobalSituationCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(this.newData != null ? this.newData.toString() : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
+                    Text(this.newData != null ? formatter.format( this.newData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
                     SizedBox(height: hp(1)),
                     Text('New', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
                   ],
