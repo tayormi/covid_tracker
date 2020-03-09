@@ -1,4 +1,5 @@
 import 'package:covid_tracker/models/case_model.dart';
+import 'package:covid_tracker/models/other_case_model.dart';
 import 'package:dio/dio.dart';
 
 import 'api_interceptor.dart';
@@ -24,45 +25,45 @@ class ApiClient {
       throw e.error; 
     }
   }
-  Future<CaseModel> getSuspectedCases() async {
+  Future<OtherCaseModel> getSuspectedCases() async {
     final url = '$baseUrl/cases/suspected';
 
     try {
       final response = await _dio.get(url);
-      return CaseModel.fromJson(response.data[0]);
+      return OtherCaseModel.fromJson(response.data[0]);
     } on DioError catch (e) {
       print(e.error);
       throw e.error;
     }
   }
-  Future<CaseModel> getConfirmedCases() async {
+  Future<OtherCaseModel> getConfirmedCases() async {
     final url = '$baseUrl/cases/confirmed';
 
     try {
       final response = await _dio.get(url);
-      return CaseModel.fromJson(response.data[0]);
+      return OtherCaseModel.fromJson(response.data[0]);
     } on DioError catch (e) {
       print(e.error);
       throw e.error;
     }
   }
-  Future<CaseModel> getDeathCases() async {
+  Future<OtherCaseModel> getDeathCases() async {
     final url = '$baseUrl/deaths';
 
     try {
       final response = await _dio.get(url);
-      return CaseModel.fromJson(response.data[0]);
+      return OtherCaseModel.fromJson(response.data[0]);
     } on DioError catch (e) {
       print(e.error);
       throw e.error;
     }
   }
-  Future<CaseModel> getRecoveredCases() async {
-    final url = '$baseUrl/deaths';
+  Future<OtherCaseModel> getRecoveredCases() async {
+    final url = '$baseUrl/recovered';
 
     try {
       final response = await _dio.get(url);
-      return CaseModel.fromJson(response.data[0]);
+      return OtherCaseModel.fromJson(response.data[0]);
     } on DioError catch (e) {
       print(e.error);
       throw e.error;

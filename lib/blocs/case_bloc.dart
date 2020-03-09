@@ -5,9 +5,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class CaseEvent extends Equatable{
+abstract class CaseEvent extends Equatable {
   const CaseEvent();
 }
+
 class FetchCase extends CaseEvent {
   @override
   List<Object> get props => [];
@@ -17,15 +18,18 @@ class RefreshCase extends CaseEvent {
   @override
   List<Object> get props => [];
 }
+
 abstract class CaseState extends Equatable {
   const CaseState();
 
   @override
   List<Object> get props => [];
 }
+
 class CaseEmpty extends CaseState {}
 
 class CaseLoading extends CaseState {}
+
 class CaseLoaded extends CaseState {
   final HomeDataModel homeData;
 
@@ -34,7 +38,9 @@ class CaseLoaded extends CaseState {
   @override
   List<Object> get props => [homeData];
 }
+
 class CaseError extends CaseState {}
+
 class CaseBloc extends Bloc<CaseEvent, CaseState> {
   final ApiRepository apiRepository;
 
@@ -50,6 +56,7 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
       yield* _mapRefreshCaseToState(event);
     }
   }
+
   Stream<CaseState> _mapFetchCaseToState(FetchCase event) async* {
     yield CaseLoading();
     try {
@@ -58,7 +65,13 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
       final deathCases = await apiRepository.getDeathCases();
       final confirmedCases = await apiRepository.getConfirmedCases();
       final recoveredCases = await apiRepository.getRecoveredCases();
-      final homeData = new HomeDataModel(caseModel.date, suspectedCases.cases, confirmedCases.cases, deathCases.cases, recoveredCases.cases);
+      final homeData = new HomeDataModel();
+      homeData.confirmedCases = confirmedCases.data;
+      homeData.suspectedCases = suspectedCases.data;
+      homeData.recoveredCases = recoveredCases.data;
+      homeData.deathCases = deathCases.data;
+      homeData.date = caseModel.date;
+      print(confirmedCases.toJson());
       yield CaseLoaded(homeData: homeData);
     } catch (_) {
       yield CaseError();
@@ -72,5 +85,8 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
     } catch (_) {
       yield state;
     }
+  }
+  calculateDataHistory() {
+    // return history of data
   }
 }

@@ -1,4 +1,5 @@
 import 'package:covid_tracker/models/case_model.dart';
+import 'package:covid_tracker/models/other_case_model.dart';
 import 'package:covid_tracker/repositories/api_client.dart';
 import 'package:flutter/material.dart';
 
@@ -9,16 +10,16 @@ class ApiRepository {
   Future<CaseModel> getAllCases() async {
     return apiClient.getAllCases();
   }
-  Future<CaseModel> getRecoveredCases() async {
+  Future<OtherCaseModel> getRecoveredCases() async {
     return apiClient.getRecoveredCases();
   }
-  Future<CaseModel> getConfirmedCases() async {
+  Future<OtherCaseModel> getConfirmedCases() async {
     return apiClient.getConfirmedCases();
   }
-  Future<CaseModel> getDeathCases() async {
+  Future<OtherCaseModel> getDeathCases() async {
     return apiClient.getDeathCases();
   }
-  Future<CaseModel> getSuspectedCases() async {
+  Future<OtherCaseModel> getSuspectedCases() async {
     return apiClient.getSuspectedCases();
   }
   
