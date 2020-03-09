@@ -21,6 +21,50 @@ class ApiClient {
       return CaseModel.fromJson(response.data[0]);
     } on DioError catch (e) {
       print(e.error);
+      throw e.error; 
+    }
+  }
+  Future<CaseModel> getSuspectedCases() async {
+    final url = '$baseUrl/cases/suspected';
+
+    try {
+      final response = await _dio.get(url);
+      return CaseModel.fromJson(response.data[0]);
+    } on DioError catch (e) {
+      print(e.error);
+      throw e.error;
+    }
+  }
+  Future<CaseModel> getConfirmedCases() async {
+    final url = '$baseUrl/cases/confirmed';
+
+    try {
+      final response = await _dio.get(url);
+      return CaseModel.fromJson(response.data[0]);
+    } on DioError catch (e) {
+      print(e.error);
+      throw e.error;
+    }
+  }
+  Future<CaseModel> getDeathCases() async {
+    final url = '$baseUrl/deaths';
+
+    try {
+      final response = await _dio.get(url);
+      return CaseModel.fromJson(response.data[0]);
+    } on DioError catch (e) {
+      print(e.error);
+      throw e.error;
+    }
+  }
+  Future<CaseModel> getRecoveredCases() async {
+    final url = '$baseUrl/deaths';
+
+    try {
+      final response = await _dio.get(url);
+      return CaseModel.fromJson(response.data[0]);
+    } on DioError catch (e) {
+      print(e.error);
       throw e.error;
     }
   }

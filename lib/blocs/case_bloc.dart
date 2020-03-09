@@ -1,4 +1,5 @@
 import 'package:covid_tracker/models/case_model.dart';
+import 'package:covid_tracker/models/home_data_model.dart';
 import 'package:covid_tracker/repositories/api_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,12 @@ class CaseEmpty extends CaseState {}
 
 class CaseLoading extends CaseState {}
 class CaseLoaded extends CaseState {
-  final CaseModel caseModel;
+  final HomeDataModel homeData;
 
-  const CaseLoaded({@required this.caseModel}) : assert(caseModel != null);
+  const CaseLoaded({@required this.homeData}) : assert(homeData != null);
 
   @override
-  List<Object> get props => [caseModel];
+  List<Object> get props => [homeData];
 }
 class CaseError extends CaseState {}
 class CaseBloc extends Bloc<CaseEvent, CaseState> {
@@ -52,9 +53,13 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
   Stream<CaseState> _mapFetchCaseToState(FetchCase event) async* {
     yield CaseLoading();
     try {
-      final CaseModel caseModel = await apiRepository.getAllCases();
-      print(caseModel.cases);
-      yield CaseLoaded(caseModel: caseModel);
+      final caseModel = await apiRepository.getAllCases();
+      final suspectedCases = await apiRepository.getSuspectedCases();
+      final deathCases = await apiRepository.getDeathCases();
+      final confirmedCases = await apiRepository.getConfirmedCases();
+      final recoveredCases = await apiRepository.getRecoveredCases();
+      final homeData = new HomeDataModel(caseModel.date, suspectedCases.cases, confirmedCases.cases, deathCases.cases, recoveredCases.cases);
+      yield CaseLoaded(homeData: homeData);
     } catch (_) {
       yield CaseError();
     }
@@ -62,8 +67,8 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
 
   Stream<CaseState> _mapRefreshCaseToState(RefreshCase event) async* {
     try {
-      final CaseModel caseModel = await apiRepository.getAllCases();
-      yield CaseLoaded(caseModel: caseModel);
+      // final CaseModel caseModel = await apiRepository.getAllCases();
+      // yield CaseLoaded(caseModel: caseModel);
     } catch (_) {
       yield state;
     }

@@ -9,4 +9,17 @@ class ApiRepository {
   Future<CaseModel> getAllCases() async {
     return apiClient.getAllCases();
   }
+  Future<CaseModel> getRecoveredCases() async {
+    return apiClient.getRecoveredCases();
+  }
+  Future<CaseModel> getConfirmedCases() async {
+    return apiClient.getConfirmedCases();
+  }
+  Future<CaseModel> getDeathCases() async {
+    return apiClient.getDeathCases();
+  }
+  Future<CaseModel> getSuspectedCases() async {
+    return apiClient.getSuspectedCases();
+  }
+  
 }

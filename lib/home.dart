@@ -56,6 +56,7 @@ class _HomeState extends State<Home> {
   );
 
   Widget buildPageView() {
+    BlocProvider.of<CaseBloc>(context).add(FetchCase());
     final Function wp = Screen(context).wp;
     final Function hp = Screen(context).hp;
     return PageView(
@@ -86,35 +87,35 @@ class _HomeState extends State<Home> {
                   );
                 }
                 if (state is CaseLoaded) {
-                  final caseData = state.caseModel;
+                  final homeData = state.homeData;
                   return RefreshIndicator(
                     child: Column(
                       children: <Widget>[
                         GlobalSituationCard(
                           cardTitle: 'SUSPECTED CASES',
                           caseTitle: 'Suspected',
-                          currentData: caseData.cases,
+                          currentData: homeData.suspectedCases,
                           newData: 1457,
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
                           cardTitle: 'CONFIRMED CASES',
                           caseTitle: 'Confirmed',
-                          currentData: 82156,
+                          currentData: homeData.confirmedCases,
                           newData: 1457,
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
                           cardTitle: 'DEATH CASES',
                           caseTitle: 'Deaths',
-                          currentData: 82156,
+                          currentData: homeData.deathCases,
                           newData: 1457,
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
                           cardTitle: 'RECOVERED CASES',
                           caseTitle: 'Recovered',
-                          currentData: 82156,
+                          currentData: homeData.recoveredCases,
                           newData: 1457,
                         ),
                         SizedBox(height: hp(3)),
@@ -188,9 +189,9 @@ class _HomeState extends State<Home> {
         ),
         selectedIndex: selectedIndex,
         onSelectTab: (index) {
-          if (index == 0) {
-            BlocProvider.of<CaseBloc>(context).add(FetchCase());
-          }
+          // if (index == 0) {
+          //   BlocProvider.of<CaseBloc>(context).add(FetchCase());
+          // }
           bottomTapped(index);
         },
         items: buildBottomNavBarItems(),
