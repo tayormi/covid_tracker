@@ -53,6 +53,7 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
     yield CaseLoading();
     try {
       final CaseModel caseModel = await apiRepository.getAllCases();
+      print(caseModel.cases);
       yield CaseLoaded(caseModel: caseModel);
     } catch (_) {
       yield CaseError();

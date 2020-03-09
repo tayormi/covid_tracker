@@ -1,9 +1,15 @@
+import 'dart:async';
+
 import 'package:covid_tracker/theme/color/light_color.dart';
 import 'package:covid_tracker/theme/theme.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_screen/responsive_screen.dart';
+import 'package:shimmer/shimmer.dart';
 
+import 'blocs/blocs.dart';
 import 'pages/screens/information.dart';
 import 'pages/screens/settings.dart';
 import 'pages/widgets/global_card.dart';
@@ -14,7 +20,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Completer<void> _refreshCompleter;
   int selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    _refreshCompleter = Completer<void>();
+  }
+
+  void addPostFrameCallback(FrameCallback callback) {
+    // Load data on widget load
+    BlocProvider.of<CaseBloc>(context).add(FetchCase());
+  }
+
   List<FFNavigationBarItem> buildBottomNavBarItems() {
     return [
       FFNavigationBarItem(
@@ -48,37 +66,86 @@ class _HomeState extends State<Home> {
       children: <Widget>[
         SingleChildScrollView(
             padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: Column(
-              children: <Widget>[
-                GlobalSituationCard(
-                  cardTitle: 'SUSPECTED CASES',
-                  caseTitle: 'Suspected',
-                  currentData: 82156,
-                  newData: 1457,
-                ),
-                SizedBox(height: hp(3)),
-                GlobalSituationCard(
-                  cardTitle: 'CONFIRMED CASES',
-                  caseTitle: 'Confirmed',
-                  currentData: 82156,
-                  newData: 1457,
-                ),
-                SizedBox(height: hp(3)),
-                GlobalSituationCard(
-                  cardTitle: 'DEATH CASES',
-                  caseTitle: 'Deaths',
-                  currentData: 82156,
-                  newData: 1457,
-                ),
-                SizedBox(height: hp(3)),
-                GlobalSituationCard(
-                  cardTitle: 'RECOVERED CASES',
-                  caseTitle: 'Recovered',
-                  currentData: 82156,
-                  newData: 1457,
-                ),
-                SizedBox(height: hp(3)),
-              ],
+            child: BlocBuilder<CaseBloc, CaseState>(
+              builder: (BuildContext context, CaseState state) {
+                print(state);
+                if (state is CaseLoading) {
+                  return SizedBox(
+                    width: wp(100),
+                    height: hp(20),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.withOpacity(0.3),
+                      highlightColor: Colors.white38,
+                      child: GlobalSituationCard(
+                        cardTitle: 'loading',
+                        caseTitle: 'loadin',
+                        currentData: null,
+                        newData: null,
+                      ),
+                    ),
+                  );
+                }
+                if (state is CaseLoaded) {
+                  final caseData = state.caseModel;
+                  return RefreshIndicator(
+                    child: Column(
+                      children: <Widget>[
+                        GlobalSituationCard(
+                          cardTitle: 'SUSPECTED CASES',
+                          caseTitle: 'Suspected',
+                          currentData: caseData.cases,
+                          newData: 1457,
+                        ),
+                        SizedBox(height: hp(3)),
+                        GlobalSituationCard(
+                          cardTitle: 'CONFIRMED CASES',
+                          caseTitle: 'Confirmed',
+                          currentData: 82156,
+                          newData: 1457,
+                        ),
+                        SizedBox(height: hp(3)),
+                        GlobalSituationCard(
+                          cardTitle: 'DEATH CASES',
+                          caseTitle: 'Deaths',
+                          currentData: 82156,
+                          newData: 1457,
+                        ),
+                        SizedBox(height: hp(3)),
+                        GlobalSituationCard(
+                          cardTitle: 'RECOVERED CASES',
+                          caseTitle: 'Recovered',
+                          currentData: 82156,
+                          newData: 1457,
+                        ),
+                        SizedBox(height: hp(3)),
+                      ],
+                    ),
+                    onRefresh: () {
+                      BlocProvider.of<CaseBloc>(context).add(FetchCase());
+                      return _refreshCompleter.future;
+                    },
+                  );
+                }
+                if (state is CaseError) {
+                  return Text(
+                    'Something went wrong!',
+                    style: TextStyle(color: Colors.red),
+                  );
+                }
+                return Center(
+                    child: RefreshIndicator(
+                  child: Text('Pull to refresh'),
+                  onRefresh: () {
+                    BlocProvider.of<CaseBloc>(context).add(FetchCase());
+                    return _refreshCompleter.future;
+                  },
+                ));
+              },
+              // listener: (BuildContext context, CaseState state) {
+              //   if (state is CaseLoaded) {
+              //     BlocProvider.of<CaseBloc>(context).add(FetchCase());
+              //   }
+              // }
             )),
         InformationScreen(),
         InformationPage(),
@@ -98,11 +165,6 @@ class _HomeState extends State<Home> {
       pageController.animateToPage(index,
           duration: Duration(milliseconds: 500), curve: Curves.ease);
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -126,6 +188,9 @@ class _HomeState extends State<Home> {
         ),
         selectedIndex: selectedIndex,
         onSelectTab: (index) {
+          if (index == 0) {
+            BlocProvider.of<CaseBloc>(context).add(FetchCase());
+          }
           bottomTapped(index);
         },
         items: buildBottomNavBarItems(),

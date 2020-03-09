@@ -5,7 +5,7 @@ import 'api_interceptor.dart';
 
 class ApiClient {
   static const baseUrl =
-      'https://apigw.nubentos.com:443/t/nubentos.com/ncovapi/1.0.0/';
+      'https://apigw.nubentos.com:443/t/nubentos.com/ncovapi/1.0.0';
   Dio _dio;
   ApiClient() {
     BaseOptions options = BaseOptions(
@@ -18,7 +18,7 @@ class ApiClient {
 
     try {
       final response = await _dio.get(url);
-      return CaseModel.fromJson(response.data);
+      return CaseModel.fromJson(response.data[0]);
     } on DioError catch (e) {
       print(e.error);
       throw e.error;
