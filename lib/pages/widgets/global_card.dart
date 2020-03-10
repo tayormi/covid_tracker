@@ -58,7 +58,7 @@ class GlobalSituationCard extends StatelessWidget {
                   children: <Widget>[
                     icon,
                     SizedBox(height: hp(1)),
-                    Text('$percentChange%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: color)),
+                    Text('${percentChange.round()}%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: color)),
                   ],
                 ),
                 // SizedBox(height: wp(10)),
