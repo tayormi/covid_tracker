@@ -1,4 +1,4 @@
-# 📖📖 Flutter eBook App [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Twitter Follow](https://img.shields.io/twitter/follow/olu_tayormi?label=Follow&style=social)](https://twitter.com/olu_tayormi)
+# 📖📖 Covid_99 Tracker [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Twitter Follow](https://img.shields.io/twitter/follow/olu_tayormi?label=Follow&style=social)](https://twitter.com/olu_tayormi)
 
 A simple Flutter app to track Covid-99 cases.
 The data we provide is collected from World Health Organization (WHO), the US Centers for Disease Control and Prevention (CDC), the Chinese Centre for Disease Control and Prevention (ECDC), China’s National Health Commission, and Chinese website DXY which provides regional case estimates faster than the national level reporting organizations..
