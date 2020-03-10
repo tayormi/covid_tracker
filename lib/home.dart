@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:covid_tracker/theme/color/light_color.dart';
 import 'package:covid_tracker/theme/theme.dart';
+import 'package:covid_tracker/utils/calculateGrowth.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -79,44 +80,49 @@ class _HomeState extends State<Home> {
                       highlightColor: Colors.white38,
                       child: GlobalSituationCard(
                         cardTitle: 'loading',
-                        caseTitle: 'loadin',
+                        caseTitle: 'loading',
                         currentData: null,
-                        newData: null,
+                        newData: null, percentChange: null,
+                        icon: showGrowthIcon(null, null)
                       ),
                     ),
                   );
                 }
                 if (state is CaseLoaded) {
-                  final homeData = state.homeData;
+                  final currentData = state.currentData;
+                  final firstData = state.firstData;
                   return RefreshIndicator(
                     child: Column(
                       children: <Widget>[
                         GlobalSituationCard(
                           cardTitle: 'SUSPECTED CASES',
                           caseTitle: 'Suspected',
-                          currentData: homeData.suspectedCases,
-                          newData: 1457,
+                          currentData: currentData.suspectedCases,
+                          newData: 1457, percentChange: calculateGrowthPercentage(currentData.suspectedCases, firstData.suspectedCases), icon: showGrowthIcon(currentData.suspectedCases, firstData.suspectedCases),
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
                           cardTitle: 'CONFIRMED CASES',
                           caseTitle: 'Confirmed',
-                          currentData: homeData.confirmedCases,
-                          newData: 1457,
+                          currentData: currentData.confirmedCases,
+                          newData: 1457, percentChange: calculateGrowthPercentage(currentData.confirmedCases, firstData.confirmedCases),
+                          icon: showGrowthIcon(currentData.confirmedCases, firstData.confirmedCases)
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
                           cardTitle: 'DEATH CASES',
                           caseTitle: 'Deaths',
-                          currentData: homeData.deathCases,
-                          newData: 1457,
+                          currentData: currentData.deathCases,
+                          newData: 1457, percentChange: calculateGrowthPercentage(currentData.deathCases, firstData.deathCases),
+                          icon: showGrowthIcon(currentData.deathCases, firstData.deathCases)
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
                           cardTitle: 'RECOVERED CASES',
                           caseTitle: 'Recovered',
-                          currentData: homeData.recoveredCases,
-                          newData: 1457,
+                          currentData: currentData.recoveredCases,
+                          newData: 1457, percentChange: calculateGrowthPercentage(currentData.recoveredCases, firstData.recoveredCases),
+                          icon: showGrowthIcon(currentData.recoveredCases, firstData.recoveredCases)
                         ),
                         SizedBox(height: hp(3)),
                       ],

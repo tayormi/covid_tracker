@@ -5,9 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/blocs.dart';
 import 'home.dart';
 import 'simple_bloc_delegate.dart';
+import 'utils/storageutil.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await StorageUtil.getInstance();
+  
   final ApiRepository apiRepository = ApiRepository(apiClient: ApiClient());
   BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(MultiBlocProvider(providers: [

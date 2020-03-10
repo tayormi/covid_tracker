@@ -9,8 +9,10 @@ class GlobalSituationCard extends StatelessWidget {
   final String caseTitle;
   final int currentData;
   final int newData;
+  final double percentChange;
+  final Icon icon;
 
-  const GlobalSituationCard({Key key, @required this.cardTitle, @required this.caseTitle, @required this.currentData, @required this.newData}) : super(key: key);
+  const GlobalSituationCard({Key key, @required this.cardTitle, @required this.caseTitle, @required this.currentData, @required this.newData, @required this.percentChange, this.icon}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final formatter = new NumberFormat("#,###");
@@ -53,28 +55,28 @@ class GlobalSituationCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.arrow_downward, color: Colors.green,),
+                    icon,
                     SizedBox(height: hp(1)),
-                    Text('20%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: Colors.green)),
+                    Text('$percentChange%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: Colors.green)),
                   ],
                 ),
-                SizedBox(height: wp(10)),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(this.newData != null ? formatter.format( this.newData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
-                    SizedBox(height: hp(1)),
-                    Text('New', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(Icons.arrow_upward, color: Colors.red,),
-                    SizedBox(height: hp(1)),
-                    Text('10%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: Colors.red)),
-                  ],
-                ),
+                // SizedBox(height: wp(10)),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: <Widget>[
+                //     Text(this.newData != null ? formatter.format( this.newData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
+                //     SizedBox(height: hp(1)),
+                //     Text('New', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
+                //   ],
+                // ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: <Widget>[
+                //     Icon(Icons.arrow_upward, color: Colors.red,),
+                //     SizedBox(height: hp(1)),
+                //     Text('10%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: Colors.red)),
+                //   ],
+                // ),
               ],
             ),
           )
