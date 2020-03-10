@@ -81,9 +81,9 @@ class _HomeState extends State<Home> {
                       child: GlobalSituationCard(
                         cardTitle: 'loading',
                         caseTitle: 'loading',
-                        currentData: null,
-                        newData: null, percentChange: null,
-                        icon: showGrowthIcon(null, null)
+                        currentData: 2344,
+                        newData: null, percentChange: calculateGrowthPercentage(234, 5678),
+                        icon: showGrowthIcon(234, 5678), color: showGrowthColor(234, 5678),
                       ),
                     ),
                   );
@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
                           cardTitle: 'SUSPECTED CASES',
                           caseTitle: 'Suspected',
                           currentData: currentData.suspectedCases,
-                          newData: 1457, percentChange: calculateGrowthPercentage(currentData.suspectedCases, firstData.suspectedCases), icon: showGrowthIcon(currentData.suspectedCases, firstData.suspectedCases),
+                          newData: 1457, percentChange: calculateGrowthPercentage(currentData.suspectedCases, firstData.suspectedCases), icon: showGrowthIcon(currentData.suspectedCases, firstData.suspectedCases), color: showGrowthColor(currentData.suspectedCases, firstData.suspectedCases),
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
@@ -106,7 +106,8 @@ class _HomeState extends State<Home> {
                           caseTitle: 'Confirmed',
                           currentData: currentData.confirmedCases,
                           newData: 1457, percentChange: calculateGrowthPercentage(currentData.confirmedCases, firstData.confirmedCases),
-                          icon: showGrowthIcon(currentData.confirmedCases, firstData.confirmedCases)
+                          icon: showGrowthIcon(currentData.confirmedCases, firstData.confirmedCases), 
+                          color: showGrowthColor(currentData.confirmedCases, firstData.confirmedCases),
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
@@ -114,7 +115,7 @@ class _HomeState extends State<Home> {
                           caseTitle: 'Deaths',
                           currentData: currentData.deathCases,
                           newData: 1457, percentChange: calculateGrowthPercentage(currentData.deathCases, firstData.deathCases),
-                          icon: showGrowthIcon(currentData.deathCases, firstData.deathCases)
+                          icon: showGrowthIcon(currentData.deathCases, firstData.deathCases), color: showGrowthColor(currentData.deathCases, firstData.deathCases),
                         ),
                         SizedBox(height: hp(3)),
                         GlobalSituationCard(
@@ -122,7 +123,8 @@ class _HomeState extends State<Home> {
                           caseTitle: 'Recovered',
                           currentData: currentData.recoveredCases,
                           newData: 1457, percentChange: calculateGrowthPercentage(currentData.recoveredCases, firstData.recoveredCases),
-                          icon: showGrowthIcon(currentData.recoveredCases, firstData.recoveredCases)
+                          icon: showGrowthIcon(currentData.recoveredCases, firstData.recoveredCases), 
+                          color: showGrowthColor(currentData.recoveredCases, firstData.recoveredCases),
                         ),
                         SizedBox(height: hp(3)),
                       ],

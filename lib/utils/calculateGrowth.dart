@@ -13,3 +13,12 @@ Icon showGrowthIcon(int currentData, int previousData) {
   }
   return icon;
 }
+Color showGrowthColor(int currentData, int previousData) {
+  Color color;
+  if(currentData > previousData) {
+    color = Colors.green;
+  } else {
+    color = Colors.red;
+  }
+  return color;
+}

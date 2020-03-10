@@ -11,8 +11,9 @@ class GlobalSituationCard extends StatelessWidget {
   final int newData;
   final double percentChange;
   final Icon icon;
+  final Color color;
 
-  const GlobalSituationCard({Key key, @required this.cardTitle, @required this.caseTitle, @required this.currentData, @required this.newData, @required this.percentChange, this.icon}) : super(key: key);
+  const GlobalSituationCard({Key key, @required this.cardTitle, @required this.caseTitle, @required this.currentData, @required this.newData, @required this.percentChange, this.icon, @required this.color}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final formatter = new NumberFormat("#,###");
@@ -57,7 +58,7 @@ class GlobalSituationCard extends StatelessWidget {
                   children: <Widget>[
                     icon,
                     SizedBox(height: hp(1)),
-                    Text('$percentChange%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: Colors.green)),
+                    Text('$percentChange%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: color)),
                   ],
                 ),
                 // SizedBox(height: wp(10)),
