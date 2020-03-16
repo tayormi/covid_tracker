@@ -1,4 +1,5 @@
 import 'package:covid_tracker/models/case_model.dart';
+import 'package:covid_tracker/models/general_data_model.dart';
 import 'package:covid_tracker/models/other_case_model.dart';
 import 'package:covid_tracker/repositories/api_client.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,8 @@ class ApiRepository {
   final ApiClient apiClient;
 
   ApiRepository({@required this.apiClient}): assert(apiClient != null);
-  Future<CaseModel> getAllCases() async {
-    return apiClient.getAllCases();
+  Future<GeneralDataModel> getAllCountryData() async {
+    return apiClient.getAllCountryData();
   }
   Future<OtherCaseModel> getRecoveredCases() async {
     return apiClient.getRecoveredCases();

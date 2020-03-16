@@ -53,6 +53,17 @@ class GlobalSituationCard extends StatelessWidget {
                     Text(this.caseTitle, style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
                   ],
                 ),
+                
+                
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(this.newData != null ? formatter.format( this.newData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
+                    SizedBox(height: hp(1)),
+                    Text('New', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
+                  ],
+                ),
+                SizedBox(height: wp(10)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -61,15 +72,6 @@ class GlobalSituationCard extends StatelessWidget {
                     Text('${percentChange.round()}%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: color)),
                   ],
                 ),
-                // SizedBox(height: wp(10)),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: <Widget>[
-                //     Text(this.newData != null ? formatter.format( this.newData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
-                //     SizedBox(height: hp(1)),
-                //     Text('New', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
-                //   ],
-                // ),
                 // Column(
                 //   crossAxisAlignment: CrossAxisAlignment.start,
                 //   children: <Widget>[

@@ -1,4 +1,5 @@
 import 'package:covid_tracker/models/case_model.dart';
+import 'package:covid_tracker/models/general_data_model.dart';
 import 'package:covid_tracker/models/other_case_model.dart';
 import 'package:dio/dio.dart';
 
@@ -6,7 +7,7 @@ import 'api_interceptor.dart';
 
 class ApiClient {
   static const baseUrl =
-      'https://apigw.nubentos.com:443/t/nubentos.com/ncovapi/1.0.0';
+      'https://thevirustracker.com/free-api';
   Dio _dio;
   ApiClient() {
     BaseOptions options = BaseOptions(
@@ -14,12 +15,12 @@ class ApiClient {
     _dio = Dio(options);
     _dio.interceptors.add(ApiInterceptor());
   }
-  Future<CaseModel> getAllCases() async {
-    final url = '$baseUrl/cases';
+  Future<GeneralDataModel> getAllCountryData() async {
+    final url = '$baseUrl?global=stats';
 
     try {
       final response = await _dio.get(url);
-      return CaseModel.fromJson(response.data[0]);
+      return GeneralDataModel.fromJson(response.data);
     } on DioError catch (e) {
       print(e.error);
       throw e.error; 

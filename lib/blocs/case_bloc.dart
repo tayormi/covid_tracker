@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:covid_tracker/models/case_model.dart';
+import 'package:covid_tracker/models/general_data_model.dart';
 import 'package:covid_tracker/models/home_data_model.dart';
 import 'package:covid_tracker/repositories/api_repository.dart';
 import 'package:covid_tracker/utils/storageutil.dart';
@@ -34,8 +35,8 @@ class CaseEmpty extends CaseState {}
 class CaseLoading extends CaseState {}
 
 class CaseLoaded extends CaseState {
-  final HomeDataModel currentData;
-  final HomeDataModel firstData;
+  final Result currentData;
+  final Result firstData;
 
   CaseLoaded({@required this.currentData, @required this.firstData});
 
@@ -62,30 +63,20 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
   }
 
   Stream<CaseState> _mapFetchCaseToState(FetchCase event) async* {
-    var firstData = new HomeDataModel();
+    var firstData = new GeneralDataModel();
     yield CaseLoading();
     try {
-      final caseModel = await apiRepository.getAllCases();
-      final suspectedCases = await apiRepository.getSuspectedCases();
-      final deathCases = await apiRepository.getDeathCases();
-      final confirmedCases = await apiRepository.getConfirmedCases();
-      final recoveredCases = await apiRepository.getRecoveredCases();
-      final currentData = new HomeDataModel(
-          date: caseModel.date,
-          suspectedCases: suspectedCases.data,
-          confirmedCases: confirmedCases.data,
-          deathCases: deathCases.data,
-          recoveredCases: recoveredCases.data);
+      final allData = await apiRepository.getAllCountryData();
       final dt = StorageUtil.getString("FirstData");
       if(dt.isNotEmpty) {
         // Check if there's a first data and save first Data in Shared Preferences
-        StorageUtil.putString("FirstData", homeDataModelToJson(currentData));
-        firstData = homeDataModelFromJson(dt);
+        StorageUtil.putString("FirstData", generalDataModelToJson(allData));
+        firstData = generalDataModelFromJson(dt);
         
       }
       //Save current Data as we will need it later
-      StorageUtil.putString("CurrentData", homeDataModelToJson(currentData));
-      yield CaseLoaded(currentData: currentData, firstData: firstData);
+      StorageUtil.putString("CurrentData", generalDataModelToJson(allData));
+      yield CaseLoaded(currentData: allData.results[0], firstData: firstData.results[0]);
     } catch (_) {
       yield CaseError();
     }
