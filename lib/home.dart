@@ -12,6 +12,7 @@ import 'package:shimmer/shimmer.dart';
 
 import 'blocs/blocs.dart';
 import 'pages/screens/information.dart';
+import 'pages/screens/news.dart';
 import 'pages/screens/settings.dart';
 import 'pages/widgets/global_card.dart';
 
@@ -43,6 +44,10 @@ class _HomeState extends State<Home> {
       FFNavigationBarItem(
         iconData: Icons.note,
         label: 'Guides',
+      ),
+      FFNavigationBarItem(
+        iconData: Icons.speaker_notes,
+        label: 'News',
       ),
       FFNavigationBarItem(
         iconData: Icons.settings,
@@ -157,7 +162,8 @@ class _HomeState extends State<Home> {
               // }
             )),
         InformationScreen(),
-        InformationPage(),
+        NewsPage(),
+        SettingsPage(),
       ],
     );
   }
