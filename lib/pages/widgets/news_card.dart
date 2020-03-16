@@ -53,10 +53,7 @@ class NewsCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        'newstracker',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
+                      
                       Text(
                         '28 February 2020' + " . " + '11:14',
                         style: TextStyle(
