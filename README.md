@@ -26,6 +26,8 @@ The [www.cdc.gov](https://www.cdc.gov) was used to provide the guides.
 &nbsp;
 <img src="screenshots/ss2.png" width="300" style="border-radius: 15px">
 </div>
+
+
 <div style="background-color:rgb(169,169,169); text-align:center">
 <img src="screenshots/ss3.png" width="300" style="border-radius: 15px">
 &nbsp;
