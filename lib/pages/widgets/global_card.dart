@@ -1,8 +1,8 @@
 import 'package:covid_tracker/theme/color/light_color.dart';
-import 'package:covid_tracker/theme/theme.dart';
+import 'package:covid_tracker/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:responsive_screen/responsive_screen.dart';
 
 class GlobalSituationCard extends StatelessWidget {
   final String cardTitle;
@@ -12,79 +12,189 @@ class GlobalSituationCard extends StatelessWidget {
   final double percentChange;
   final Icon icon;
   final Color color;
+  final Color cardColor;
 
-  const GlobalSituationCard({Key key, @required this.cardTitle, @required this.caseTitle, @required this.currentData, @required this.newData, @required this.percentChange, this.icon, @required this.color}) : super(key: key);
+  const GlobalSituationCard(
+      {Key key,
+      @required this.cardTitle,
+      @required this.caseTitle,
+      @required this.currentData,
+      @required this.newData,
+      @required this.percentChange,
+      this.icon,
+      this.cardColor = CardColors.green,
+      @required this.color})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     final formatter = new NumberFormat("#,###");
-    final Function wp = Screen(context).wp;
-    final Function hp = Screen(context).hp;
-    return Container(
-      height: hp(20),
-      width: wp(100),
-      padding: EdgeInsets.all(20),
-      //margin: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: LightColor.cardBackground,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          new BoxShadow(
-              color: Colors.grey[100],
-              blurRadius: 4.0,
-              spreadRadius: 3.5,
-              offset: Offset(0.0, 2)),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(this.cardTitle, style: AppTheme.titleStyle.copyWith(color: LightColor.darkgrey,)),
-          SizedBox(height: hp(4)),
-          Expanded(
+
+    return Stack(
+      children: <Widget>[
+        Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: screenWidth(context),
+                height: screenHeight(context, percent: 0.23),
+                margin: EdgeInsets.symmetric(horizontal:25),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: cardColor,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.18),
+                        blurRadius: 20,
+                        spreadRadius: 3.5,
+                        offset: Offset(0, 13)),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          height: 40,
+                          margin: EdgeInsets.all(15),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 17),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: CardColors.transparentBlack,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: RichText(
+                            text: TextSpan(
+                                text: "${cardTitle.split(' ')[0]}  ",
+                                style: GoogleFonts.cabin(
+                                  textStyle: TextStyle(color: Colors.white),
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "${cardTitle.split(' ')[1]}"
+                                        .toUpperCase(),
+                                    style: GoogleFonts.cabin(
+                                      textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left:20),
                       child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(this.currentData != null ? formatter.format(this.currentData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
-                    SizedBox(height: hp(1)),
-                    Text(this.caseTitle, style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                currentData != null
+                                    ? formatter.format(currentData)
+                                    : '-',
+                                style: GoogleFonts.cabin(
+                                  textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 29),
+                                ),
+                              ),
+                              const YMargin(16),
+                              Text(
+                                caseTitle ?? "",
+                                style: GoogleFonts.cabin(
+                                  textStyle: TextStyle(
+                                      color: Colors.white54,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                newData != null
+                                    ? formatter.format(newData)
+                                    : '-',
+                                style: GoogleFonts.cabin(
+                                  textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 29),
+                                ),
+                              ),
+                              const YMargin(16),
+                              Text(
+                                "New",
+                                style: GoogleFonts.cabin(
+                                  textStyle: TextStyle(
+                                      color: Colors.white54,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-                
-                
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(this.newData != null ? formatter.format( this.newData) : '-', style: AppTheme.titleStyle.copyWith(fontSize: 20, color: Colors.black)),
-                    SizedBox(height: hp(1)),
-                    Text('New', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: LightColor.darkgrey)),
+              )
+            ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Column(
+            children: <Widget>[
+              const YMargin(130),
+              Container(
+                width: 58,
+                height: 58,
+                margin: EdgeInsets.all(25),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 30,
+                        spreadRadius: 3.5,
+                        offset: Offset(0, 13)),
                   ],
                 ),
-                SizedBox(height: wp(10)),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    icon,
-                    SizedBox(height: hp(1)),
-                    Text('${percentChange.round()}%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: color)),
+                    Icon(icon.icon, color: icon.color, size: 15),
+                    Text(
+                      "${percentChange.round()}%",
+                      style: GoogleFonts.cabin(
+                        textStyle: TextStyle(
+                            color: color,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 13),
+                      ),
+                    ),
                   ],
                 ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: <Widget>[
-                //     Icon(Icons.arrow_upward, color: Colors.red,),
-                //     SizedBox(height: hp(1)),
-                //     Text('10%', style: AppTheme.titleStyle.copyWith(fontSize: 14, color: Colors.red)),
-                //   ],
-                // ),
-              ],
-            ),
-          )
-        ]
-      )
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

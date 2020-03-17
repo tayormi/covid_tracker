@@ -1,11 +1,13 @@
-
 import 'package:covid_tracker/pages/screens/home_screen.dart';
 import 'package:covid_tracker/theme/color/light_color.dart';
 import 'package:covid_tracker/theme/theme.dart';
-import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:covid_tracker/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
 import 'blocs/blocs.dart';
 import 'pages/screens/information.dart';
@@ -18,34 +20,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
   int selectedIndex = 0;
-  
 
   void addPostFrameCallback(FrameCallback callback) {
     // Load data on widget load
     BlocProvider.of<CaseBloc>(context).add(FetchCase());
-  }
-
-  List<FFNavigationBarItem> buildBottomNavBarItems() {
-    return [
-      FFNavigationBarItem(
-        iconData: Icons.home,
-        label: 'Home',
-      ),
-      FFNavigationBarItem(
-        iconData: Icons.speaker_notes,
-        label: 'News',
-      ),
-      FFNavigationBarItem(
-        iconData: Icons.note,
-        label: 'Guides',
-      ),
-      FFNavigationBarItem(
-        iconData: Icons.settings,
-        label: 'Settings',
-      ),
-    ];
   }
 
   PageController pageController = PageController(
@@ -54,7 +33,6 @@ class _HomeState extends State<Home> {
   );
 
   Widget buildPageView() {
-    
     return PageView(
       controller: pageController,
       onPageChanged: (index) {
@@ -86,30 +64,84 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LightColor.background,
-      appBar: AppBar(
-          centerTitle: false,
-          elevation: 0,
-          backgroundColor: LightColor.background,
-          title: Text('Covid-19 Tracker',
-              style: AppTheme.h1Style.copyWith(color: LightColor.darkgrey))),
-      body: buildPageView(),
-      bottomNavigationBar: FFNavigationBar(
-        theme: FFNavigationBarTheme(
-          barBackgroundColor: Colors.white,
-          selectedItemBorderColor: Color(0xFFfee9e8),
-          selectedItemBackgroundColor: Color(0xFF62bd80),
-          selectedItemIconColor: Colors.white,
-          selectedItemLabelColor: Colors.black,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              children: <Widget>[
+                const YMargin(60),
+                Text(
+                  'Covid-19',
+                  style: GoogleFonts.cabin(
+                    textStyle:
+                        TextStyle(fontSize: 21, color: Color(0xff989CAC)),
+                  ),
+                ),
+                const YMargin(4),
+                Text(
+                  'Tracker',
+                  style: GoogleFonts.cabin(
+                    textStyle: TextStyle(
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const YMargin(10),
+          Expanded(child: buildPageView()),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+        ]),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0)
+                .add(EdgeInsets.only(top: 20)),
+            child: GNav(
+                gap: 10,
+                activeColor: Colors.white,
+                color: Colors.grey[400],
+                iconSize: 24,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                duration: Duration(milliseconds: 800),
+                tabBackgroundColor: Colors.grey[800],
+                tabs: [
+                  GButton(
+                    icon: LineIcons.home,
+                    text: 'Home',
+                    backgroundColor: CardColors.red,
+                  ),
+                  GButton(
+                    icon: LineIcons.newspaper_o,
+                    text: 'News',
+                    backgroundColor: CardColors.cyan,
+                  ),
+                  GButton(
+                    icon: LineIcons.list_ul,
+                    text: 'Guides',
+                    backgroundColor: CardColors.blue,
+                  ),
+                  GButton(
+                    icon: LineIcons.cog,
+                    text: 'Settings',
+                    backgroundColor: CardColors.green,
+                  ),
+                ],
+                selectedIndex: selectedIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    pageController.jumpToPage(index);
+                  });
+                }),
+          ),
         ),
-        selectedIndex: selectedIndex,
-        onSelectTab: (index) {
-          // if (index == 0) {
-          //   BlocProvider.of<CaseBloc>(context).add(FetchCase());
-          // }
-          bottomTapped(index);
-        },
-        items: buildBottomNavBarItems(),
       ),
     );
   }

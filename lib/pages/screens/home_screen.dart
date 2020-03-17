@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:covid_tracker/blocs/blocs.dart';
 import 'package:covid_tracker/pages/widgets/global_card.dart';
+import 'package:covid_tracker/theme/color/light_color.dart';
 import 'package:covid_tracker/utils/calculateGrowth.dart';
+import 'package:covid_tracker/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_screen/responsive_screen.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,27 +30,21 @@ class _HomeScreenState extends State<HomeScreen> {
     final Function wp = Screen(context).wp;
     final Function hp = Screen(context).hp;
     return SingleChildScrollView(
-        padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+        padding: EdgeInsets.only(top: 20),
         child: BlocBuilder<CaseBloc, CaseState>(
           builder: (BuildContext context, CaseState state) {
             print(state);
             if (state is CaseLoading) {
-              return SizedBox(
-                width: wp(100),
-                height: hp(20),
-                child: Shimmer.fromColors(
-                  baseColor: Colors.grey.withOpacity(0.3),
-                  highlightColor: Colors.white38,
-                  child: GlobalSituationCard(
-                    cardTitle: 'loading',
-                    caseTitle: 'loading',
-                    currentData: 2344,
-                    newData: null,
-                    percentChange: calculateGrowthPercentage(234, 5678),
-                    icon: showGrowthIcon(234, 5678),
-                    color: showGrowthColor(234, 5678),
-                  ),
-                ),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  YMargin(hp(29)),
+                  Center(
+                      child: SpinKitSquareCircle(
+                    color: CardColors.green,
+                    size: 50.0,
+                  )),
+                ],
               );
             }
             if (state is CaseLoaded) {
@@ -57,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: <Widget>[
                     GlobalSituationCard(
-                      cardTitle: 'TOTAL CASES',
+                      cardTitle: 'Total CASES',
                       caseTitle: 'Total',
                       currentData: currentData.totalCases,
                       newData: currentData.totalNewCasesToday,
@@ -68,22 +65,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           currentData.totalNewCasesToday),
                       color: Colors.red,
                     ),
-                    SizedBox(height: hp(3)),
-
                     GlobalSituationCard(
-                      cardTitle: 'RECOVERED CASES',
+                      cardTitle: 'Recovered CASES',
                       caseTitle: 'Recovered',
                       currentData: currentData.totalRecovered,
                       newData:
                           currentData.totalRecovered - firstData.totalRecovered,
                       percentChange: calculateGrowthPercentage(
-                          currentData.totalRecovered, currentData.totalRecovered - firstData.totalRecovered),
-                      icon: Icon(Icons.arrow_upward, color: Colors.green,),
+                          currentData.totalRecovered,
+                          currentData.totalRecovered -
+                              firstData.totalRecovered),
+                      cardColor: CardColors.blue,
+                      icon: Icon(
+                        Icons.arrow_upward,
+                        color: Colors.green,
+                      ),
                       color: Colors.green,
                     ),
-                    SizedBox(height: hp(3)),
                     GlobalSituationCard(
-                      cardTitle: 'DEATH CASES',
+                      cardTitle: 'Death CASES',
                       caseTitle: 'Deaths',
                       currentData: currentData.totalDeaths,
                       newData: currentData.totalNewDeathsToday,
@@ -93,10 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: showGrowthIcon(currentData.totalDeaths,
                           currentData.totalNewDeathsToday),
                       color: Colors.red,
+                      cardColor: CardColors.red,
                     ),
                     SizedBox(height: hp(3)),
                     GlobalSituationCard(
-                      cardTitle: 'SERIOUS CASES',
+                      cardTitle: 'Serious CASES',
                       caseTitle: 'Serious',
                       currentData: currentData.totalSeriousCases,
                       newData: currentData.totalSeriousCases -
@@ -108,23 +109,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: showGrowthIcon(currentData.totalSeriousCases,
                           firstData.totalSeriousCases),
                       color: Colors.red,
+                      cardColor: CardColors.cyan,
                     ),
-                    // GlobalSituationCard(
-                    //   cardTitle: 'DEATH CASES',
-                    //   caseTitle: 'Deaths',
-                    //   currentData: currentData.deathCases,
-                    //   newData: 1457, percentChange: calculateGrowthPercentage(currentData.deathCases, firstData.deathCases),
-                    //   icon: showGrowthIcon(currentData.deathCases, firstData.deathCases), color: showGrowthColor(currentData.deathCases, firstData.deathCases),
-                    // ),
-                    // SizedBox(height: hp(3)),
-                    // GlobalSituationCard(
-                    //   cardTitle: 'RECOVERED CASES',
-                    //   caseTitle: 'Recovered',
-                    //   currentData: currentData.recoveredCases,
-                    //   newData: 1457, percentChange: calculateGrowthPercentage(currentData.recoveredCases, firstData.recoveredCases),
-                    //   icon: showGrowthIcon(currentData.recoveredCases, firstData.recoveredCases),
-                    //   color: showGrowthColor(currentData.recoveredCases, firstData.recoveredCases),
-                    // ),
                     SizedBox(height: hp(3)),
                   ],
                 ),
@@ -137,7 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
             if (state is CaseError) {
               return Text(
                 'Something went wrong!',
-                style: TextStyle(color: Colors.red),
+                style:
+                    GoogleFonts.cabin(textStyle: TextStyle(color: Colors.red)),
               );
             }
             return Center(
