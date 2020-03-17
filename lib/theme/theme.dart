@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'color/light_color.dart';
 
@@ -12,7 +13,8 @@ class AppTheme {
     primaryColorDark: LightColor.Darker,
     primaryColorLight: LightColor.brighter,
     cardTheme: CardTheme(color: LightColor.background),
-    textTheme: TextTheme(display1: TextStyle(color: LightColor.black)),
+    textTheme: TextTheme(display1:  GoogleFonts.cabin(
+      textStyle:TextStyle(color: LightColor.black))),
     iconTheme: IconThemeData(color: LightColor.lightblack),
     bottomAppBarColor: LightColor.background,
     dividerColor: LightColor.lightGrey,
@@ -33,15 +35,22 @@ class AppTheme {
   );
 
   static TextStyle titleStyle =
-      const TextStyle(color: LightColor.lightblack, fontSize: 16);
+       GoogleFonts.cabin(
+      textStyle: TextStyle(color: LightColor.lightblack, fontSize: 16));
   static TextStyle subTitleStyle =
-      const TextStyle(color: LightColor.subTitleTextColor, fontSize: 12);
+       GoogleFonts.cabin(
+      textStyle: TextStyle(color: LightColor.subTitleTextColor, fontSize: 12));
 
-  static TextStyle h1Style =
-      const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
-  static TextStyle h2Style = const TextStyle(fontSize: 22);
-  static TextStyle h3Style = const TextStyle(fontSize: 20);
-  static TextStyle h4Style = const TextStyle(fontSize: 18);
-  static TextStyle h5Style = const TextStyle(fontSize: 16);
-  static TextStyle h6Style = const TextStyle(fontSize: 14);
+  static TextStyle h1Style = GoogleFonts.cabin(
+      textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+  static TextStyle h2Style =  GoogleFonts.cabin(
+      textStyle: TextStyle(fontSize: 22));
+  static TextStyle h3Style =  GoogleFonts.cabin(
+      textStyle: TextStyle(fontSize: 20));
+  static TextStyle h4Style =  GoogleFonts.cabin(
+      textStyle: TextStyle(fontSize: 18));
+  static TextStyle h5Style =  GoogleFonts.cabin(
+      textStyle: TextStyle(fontSize: 16));
+  static TextStyle h6Style =  GoogleFonts.cabin(
+      textStyle: TextStyle(fontSize: 14));
 }
