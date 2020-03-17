@@ -1,21 +1,16 @@
-import 'dart:async';
 
 import 'package:covid_tracker/pages/screens/home_screen.dart';
 import 'package:covid_tracker/theme/color/light_color.dart';
 import 'package:covid_tracker/theme/theme.dart';
-import 'package:covid_tracker/utils/calculateGrowth.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:responsive_screen/responsive_screen.dart';
-import 'package:shimmer/shimmer.dart';
 
 import 'blocs/blocs.dart';
 import 'pages/screens/information.dart';
 import 'pages/screens/news.dart';
 import 'pages/screens/settings.dart';
-import 'pages/widgets/global_card.dart';
 
 class Home extends StatefulWidget {
   @override

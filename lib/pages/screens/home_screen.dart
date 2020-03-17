@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       newData:
                           currentData.totalRecovered - firstData.totalRecovered,
                       percentChange: calculateGrowthPercentage(
-                          currentData.totalRecovered, firstData.totalRecovered),
+                          currentData.totalRecovered, currentData.totalRecovered - firstData.totalRecovered),
                       icon: Icon(Icons.arrow_upward, color: Colors.green,),
                       color: Colors.green,
                     ),

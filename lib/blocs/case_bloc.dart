@@ -70,15 +70,19 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
       // final news = await apiRepository.getCountryNews();
       // print(news[0].title);
       final dt = StorageUtil.getString("FirstData");
-      if(dt.isNotEmpty) {
+      if (dt.isNotEmpty) {
         // Check if there's a first data and save first Data in Shared Preferences
-        StorageUtil.putString("FirstData", generalDataModelToJson(allData));
         firstData = generalDataModelFromJson(dt);
-        
+        // StorageUtil.putString("FirstData", generalDataModelToJson(allData));
+        yield CaseLoaded(
+            currentData: allData.results[0], firstData: firstData.results[0]);
+      } else {
+        StorageUtil.putString("FirstData", generalDataModelToJson(allData));
+        yield CaseLoaded(
+            currentData: allData.results[0], firstData: allData.results[0]);
       }
       //Save current Data as we will need it later
-      StorageUtil.putString("CurrentData", generalDataModelToJson(allData));
-      yield CaseLoaded(currentData: allData.results[0], firstData: firstData.results[0]);
+
     } catch (_) {
       yield CaseError();
     }

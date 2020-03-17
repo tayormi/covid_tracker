@@ -19,7 +19,7 @@ class ApiInterceptor extends Interceptor {
     }
     print(
         "--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}");
-    options.headers.addAll({"Authorization": "Bearer $token"});
+    // options.headers.addAll({"Authorization": "Bearer $token"});
 
     return options;
   }
