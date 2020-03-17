@@ -17,6 +17,9 @@ void main() async {
     BlocProvider<CaseBloc>(
       create: (context) => CaseBloc(apiRepository: apiRepository),
     ),
+    BlocProvider<NewsBloc>(
+      create: (context) => NewsBloc(apiRepository: apiRepository),
+    ),
   ], child: MyApp(apiRepository: apiRepository,)));
 }
 

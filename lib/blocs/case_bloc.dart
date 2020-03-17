@@ -67,6 +67,8 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
     yield CaseLoading();
     try {
       final allData = await apiRepository.getAllCountryData();
+      // final news = await apiRepository.getCountryNews();
+      // print(news[0].title);
       final dt = StorageUtil.getString("FirstData");
       if(dt.isNotEmpty) {
         // Check if there's a first data and save first Data in Shared Preferences

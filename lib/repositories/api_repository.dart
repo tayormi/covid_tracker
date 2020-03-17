@@ -1,8 +1,11 @@
 import 'package:covid_tracker/models/case_model.dart';
 import 'package:covid_tracker/models/general_data_model.dart';
+import 'package:covid_tracker/models/news_model.dart';
 import 'package:covid_tracker/models/other_case_model.dart';
 import 'package:covid_tracker/repositories/api_client.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ApiRepository {
   final ApiClient apiClient;
@@ -20,8 +23,11 @@ class ApiRepository {
   Future<OtherCaseModel> getDeathCases() async {
     return apiClient.getDeathCases();
   }
-  Future<OtherCaseModel> getSuspectedCases() async {
-    return apiClient.getSuspectedCases();
+  Future<http.Response> getCountryNews() async {
+    return apiClient.getCountryNews('NG');
   }
+  // Future<OtherCaseModel> getSuspectedCases() async {
+  //   return apiClient.getSuspectedCases();
+  // }
   
 }

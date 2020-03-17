@@ -1,7 +1,11 @@
+import 'package:covid_tracker/models/news_model.dart';
 import 'package:covid_tracker/theme/color/light_color.dart';
 import 'package:flutter/material.dart';
 
 class NewsCard extends StatelessWidget {
+  final dynamic newsItem;
+
+  const NewsCard({Key key, @required this.newsItem}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +23,7 @@ class NewsCard extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.black38,
                     fontWeight: FontWeight.w500,
-                    fontSize: 16.0),
+                    fontSize: 13.0),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 12.0),
@@ -28,7 +32,7 @@ class NewsCard extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Text(
-                        'Nigeria Records Sub-Saharan Africa&rsquo;s First Coronavirus Case',
+                        newsItem?.title,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 22.0),
                       ),
@@ -40,7 +44,7 @@ class NewsCard extends StatelessWidget {
                           height: 80.0,
                           width: 80.0,
                           child: Image.network(
-                            "https://thevirustracker.com/news-images/thumbs/0/nigeria-records-sub-saharan-africa-s-first-coronavirus-case-zjV8A5.jpg",
+                            newsItem?.image,
                             fit: BoxFit.cover,
                           )),
                     ),
@@ -55,7 +59,7 @@ class NewsCard extends StatelessWidget {
                     children: <Widget>[
                       
                       Text(
-                        '28 February 2020' + " . " + '11:14',
+                        newsItem?.time,
                         style: TextStyle(
                             color: Colors.black45, fontWeight: FontWeight.w500),
                       )

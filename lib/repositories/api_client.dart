@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:covid_tracker/models/case_model.dart';
 import 'package:covid_tracker/models/general_data_model.dart';
+import 'package:covid_tracker/models/news_model.dart';
 import 'package:covid_tracker/models/other_case_model.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 import 'api_interceptor.dart';
 
@@ -26,16 +30,17 @@ class ApiClient {
       throw e.error; 
     }
   }
-  Future<OtherCaseModel> getSuspectedCases() async {
-    final url = '$baseUrl/cases/suspected';
+  Future<http.Response> getCountryNews(String countryCode) async {
+    final url = '$baseUrl?countryTotal=$countryCode';
+    return await http.get(url);
+    // try {
+    //   final response = await _dio.get(url);
 
-    try {
-      final response = await _dio.get(url);
-      return OtherCaseModel.fromJson(response.data[0]);
-    } on DioError catch (e) {
-      print(e.error);
-      throw e.error;
-    }
+    //   return response;
+    // } on DioError catch (e) {
+    //   print(e.error);
+    //   throw e.error;
+    // }
   }
   Future<OtherCaseModel> getConfirmedCases() async {
     final url = '$baseUrl/cases/confirmed';
