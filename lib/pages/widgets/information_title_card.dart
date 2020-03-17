@@ -34,21 +34,23 @@ class InformationTitleCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Icon(icon, size: 50, color: iconColor,),
-              SizedBox(width: wp(5)),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(title, style: AppTheme.h2Style.copyWith(color: LightColor.darkgrey, fontWeight: FontWeight.bold, fontSize: 16)),
-                  SizedBox(height: hp(1)),
-                  Text(subTitle, style: AppTheme.h2Style.copyWith(color: LightColor.darkgrey.withOpacity(0.5), fontSize: 16))
-                ],
-              )
-            ]
+          Expanded(
+                      child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Icon(icon, size: 50, color: iconColor,),
+                SizedBox(width: wp(5)),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(title, style: AppTheme.h2Style.copyWith(color: LightColor.darkgrey, fontWeight: FontWeight.bold, fontSize: 16)),
+                    SizedBox(height: hp(1)),
+                    Text(subTitle, style: AppTheme.h2Style.copyWith(color: LightColor.darkgrey.withOpacity(0.5), fontSize: 16))
+                  ],
+                )
+              ]
+            ),
           )
         ]
       ),

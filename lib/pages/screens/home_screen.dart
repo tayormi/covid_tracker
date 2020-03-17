@@ -78,9 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           currentData.totalRecovered - firstData.totalRecovered,
                       percentChange: calculateGrowthPercentage(
                           currentData.totalRecovered, firstData.totalRecovered),
-                      icon: showGrowthIcon(
-                          currentData.totalRecovered, firstData.totalRecovered),
-                      color: Colors.red,
+                      icon: Icon(Icons.arrow_upward, color: Colors.green,),
+                      color: Colors.green,
                     ),
                     SizedBox(height: hp(3)),
                     GlobalSituationCard(
