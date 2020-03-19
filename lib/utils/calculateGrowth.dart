@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 
 calculateGrowthPercentage(int previousData, int newData) {
-  return (newData / previousData) * 100;
+  var growthPercentage =  (newData / previousData) * 100;
+  return growthPercentage.isInfinite || growthPercentage.isNaN  ? 0.0 : growthPercentage;
 }
 Icon showGrowthIcon(int currentData, int previousData) {
   Icon icon;
