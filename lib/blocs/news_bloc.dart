@@ -62,7 +62,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     try {
       final news = await apiRepository.getCountryNews();
       final data = json.decode(news.body)['countrynewsitems'];
-      print(data);
+      // print(data);
       //Save current Data as we will need it later
       yield NewsLoaded(news: data);
     } catch (_) {

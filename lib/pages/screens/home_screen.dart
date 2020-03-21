@@ -16,17 +16,27 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
   Completer<void> _refreshCompleter;
   @override
   void initState() {
+    
     super.initState();
     _refreshCompleter = Completer<void>();
   }
+ @override
+  void didChangeDependencies() {
+    BlocProvider.of<CaseBloc>(context).add(FetchCase());
+    //do whatever you want with the bloc here.
+    super.didChangeDependencies();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<CaseBloc>(context).add(FetchCase());
+    super.build(context);
+    
     final Function wp = Screen(context).wp;
     final Function hp = Screen(context).hp;
     return SingleChildScrollView(
@@ -143,4 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // }
         ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
