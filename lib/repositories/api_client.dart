@@ -17,7 +17,7 @@ class ApiClient {
     BaseOptions options = BaseOptions(
         receiveTimeout: 100000, connectTimeout: 100000, baseUrl: baseUrl);
     _dio = Dio(options);
-    _dio.interceptors.add(ApiInterceptor());
+    // _dio.interceptors.add(ApiInterceptor());
   }
   Future<GeneralDataModel> getAllCountryData() async {
     final url = '$baseUrl?global=stats';

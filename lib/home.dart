@@ -10,9 +10,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 import 'blocs/blocs.dart';
-import 'pages/screens/information.dart';
-import 'pages/screens/news.dart';
-import 'pages/screens/settings.dart';
+import 'pages/screens/information_screen.dart';
+import 'pages/screens/news_screen.dart';
+import 'pages/screens/settings_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
 
   void addPostFrameCallback(FrameCallback callback) {
     // Load data on widget load
+    print('relad?');
     BlocProvider.of<CaseBloc>(context).add(FetchCase());
   }
 
