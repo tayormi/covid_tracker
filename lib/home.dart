@@ -103,8 +103,8 @@ class _HomeState extends State<Home> {
         ]),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0)
-                .add(EdgeInsets.only(top: 20)),
+            padding: const EdgeInsets.all(10)
+                .add(EdgeInsets.only(top: 5)),
             child: GNav(
                 gap: 10,
                 activeColor: Colors.white,
