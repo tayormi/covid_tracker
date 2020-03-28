@@ -31,7 +31,7 @@ class ApiClient {
     }
   }
   Future<http.Response> getCountryNews(String countryCode) async {
-    final url = '$baseUrl?countryTotal=$countryCode';
+    final url = '$baseUrl?countryNewsTotal=$countryCode';
     return await http.get(url);
     // try {
     //   final response = await _dio.get(url);
