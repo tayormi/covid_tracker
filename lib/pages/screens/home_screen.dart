@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               final currentData = state.currentData;
               final firstData = state.firstData;
               return RefreshIndicator(
+                color: Colors.green,
                 child: Column(
                   children: <Widget>[
                     GlobalSituationCard(
